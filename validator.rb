@@ -13,7 +13,7 @@ class Validator
       find_diff(user, movies, differences)
     end
     average = Validator.average_diff(differences)
-    Validator.stdev_diff(differences, average)
+    return differences, average, Validator.stdev_diff(differences, average)
   end
 
   def self.find_diff(user, movies, differences)

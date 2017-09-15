@@ -1,0 +1,44 @@
+Files version 1:
+Average error is: 0.39335
+Standard deviation of the error is: 0.5693204523816081
+Number of predictions 0 off from actual value was: 12979
+Number of predictions 1 off from actual value was: 6184
+Number of predictions 2 off from actual value was: 828
+Number of predictions 3 off from actual value was: 9
+Number of predictions 4 off from actual value was: 0
+
+Files version 2:
+Average error is: 0.38315
+Standard deviation of the error is: 0.5643102670517246
+Number of predictions 0 off from actual value was: 13151
+Number of predictions 1 off from actual value was: 6042
+Number of predictions 2 off from actual value was: 800
+Number of predictions 3 off from actual value was: 7
+Number of predictions 4 off from actual value was: 0
+
+Files version 3:
+Average error is: 0.3689
+Standard deviation of the error is: 0.559386083130407
+Number of predictions 0 off from actual value was: 13409
+Number of predictions 1 off from actual value was: 5818
+Number of predictions 2 off from actual value was: 759
+Number of predictions 3 off from actual value was: 14
+Number of predictions 4 off from actual value was: 0
+
+Files version 4:
+Average error is: 0.372
+Standard deviation of the error is: 0.5564314872471259
+Number of predictions 0 off from actual value was: 13312
+Number of predictions 1 off from actual value was: 5944
+Number of predictions 2 off from actual value was: 736
+Number of predictions 3 off from actual value was: 8
+Number of predictions 4 off from actual value was: 0
+
+Files version 5:
+Average error is: 0.37775
+Standard deviation of the error is: 0.5573642772011385
+Number of predictions 0 off from actual value was: 13194
+Number of predictions 1 off from actual value was: 6064
+Number of predictions 2 off from actual value was: 735
+Number of predictions 3 off from actual value was: 7
+Number of predictions 4 off from actual value was: 0

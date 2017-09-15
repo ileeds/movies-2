@@ -7,8 +7,17 @@ class Control
   def run(filename, version)
     ratings_base = Ratings.initialize_base(filename)
     ratings_test = Ratings.initialize_test(filename)
-    stdev = Validator.validate(ratings_base, ratings_test)
-    puts 'Standard deviation for files version ' + version + ' is: ' + stdev.to_s
+    diff, average, stdev = Validator.validate(ratings_base, ratings_test)
+    show_stats(version, diff, average, stdev)
+  end
+
+  def show_stats(version, diff, average, stdev)
+    puts "\nFiles version " + version + ':'
+    puts 'Average error is: ' + average.to_s
+    puts 'Standard deviation of the error is: ' + stdev.to_s
+    (0..4).each do |off|
+      puts 'Number of predictions ' + off.to_s + ' off from actual value was: ' + diff[off].to_s
+    end
   end
 
 end

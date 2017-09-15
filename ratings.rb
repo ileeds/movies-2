@@ -80,7 +80,7 @@ class Ratings
     if popularity
       return (@users[user][:average] + popularity) / 2
     end
-    4
+    3
   end
 
   def self.split(user_arr)
