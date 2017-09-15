@@ -1,4 +1,0 @@
-The 10 most popular movies are: 1122, 1653, 1599, 814, 1293, 1536, 1467, 1201, 1189, 1500
-The 10 least popular movies are: 852, 1563, 1572, 1565, 1548, 1561, 1654, 1354, 599, 1577
-The 10 users most similar to user 1 are: 464, 700, 742, 2, 165, 285, 473, 192, 860, 438
-The 10 users least similar to user 1 are: 739, 108, 419, 142, 767, 730, 203, 792, 677, 113

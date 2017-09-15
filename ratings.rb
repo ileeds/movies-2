@@ -3,34 +3,66 @@ class Ratings
 
   attr_reader :users
 
-  # the constructor of the MovieData class accepts a single parameter, the file
-  # name of the main data file. It reads the file content in
-  def initialize(filename)
+  def initialize(users, movies)
+    @users, @movies = users, movies
+  end
+
+
+  def self.initialize_base(filename)
+    filename += ".base"
     @users = Hash.new
     @movies = Hash.new
 
     open(filename).read.each_line do |line|
-      if !@users.key?(line.split[0].to_i)
-          @users[line.split[0].to_i] = Hash.new
+      user_arr = line.split
+      user_id, movie_id, movie_rating = user_arr[0].to_i, user_arr[1].to_i, user_arr[2].to_i
+      user = @users[user_id]
+      if !user
+          user = Hash.new
       end
-      # each user id key will have a value that is a hash
-      # each key of this hash is the movie id, and each value is the movie's rating
-      @users[line.split[0].to_i][line.split[1].to_i] = line.split[2].to_i
+      user[movie_id] = movie_rating
 
-      if !@movies.key?(line.split[1].to_i)
-          @movies[line.split[1].to_i] = Array.new
+      if !user.key?(:average)
+        user[:average] = Array.new
       end
-      # each movie id key will have a value that is an array containg all user ratings
-      @movies[line.split[1].to_i].push(line.split[2].to_i)
+      user[:average].push(movie_rating)
+      @users[user_id] = user
+
+      if !@movies.key?(movie_id)
+          @movies[movie_id] = Array.new
+      end
+      @movies[movie_id].push(movie_rating)
     end
 
-    # calculate the average rating of each movie
-    @movies.each do |key, value|
-      @movies[key] = value.reduce(:+).to_f / value.size
+    @users.each do |key, movies|
+      @users[key][:average] = movies[:average].reduce(:+).to_f / movies.size
     end
 
-    #sort the movies hash by most to least popular
+    @movies.each do |key, ratings|
+      @movies[key] = ratings.reduce(:+).to_f / ratings.size
+    end
+
     @movies = @movies.sort_by {|key, value| value}.reverse.to_h
+    new(@users, @movies)
+  end
+
+  def self.initialize_test(filename)
+    filename += ".test"
+    @users = Hash.new
+    @movies = Hash.new
+
+    open(filename).read.each_line do |line|
+      user_arr = line.split
+      user_id, movie_id, movie_rating = user_arr[0].to_i, user_arr[1].to_i, user_arr[2].to_i
+      user = @users[user_id]
+      if !user
+          user = Hash.new
+      end
+
+      user[movie_id] = movie_rating
+      @users[user_id] = user
+    end
+    new(@users, @movies)
   end
 
   # return an integer from 1 to 5 to indicate the popularity of a certain movie
@@ -43,37 +75,11 @@ class Ratings
     @movies.keys
   end
 
-  # generate a number between 0 and 1 indicating the similarity in movie
-  # preferences between user1 and user2. 0 is no similarity
-  def similarity(user1, user2)
-    common_movies=0
-    similar_tastes = Array.new
-    @users[user1].each do |key, value|
-      # keep track of common movies and difference of ratings of these movies
-      if @users[user2].key?(key)
-        common_movies+=1
-        similar_tastes.push(4-((value-@users[user2][key]).abs))
-      end
-    end
-    taste_num = (similar_tastes.reduce(:+).to_f / similar_tastes.size) / 4
-    uncommon_movies = Math.sqrt(@users[user1].size + @users[user2].size) - common_movies
-    #similarity based on similarity of ratings/movies in common
-    taste_num / uncommon_movies+1
-  end
-
-  # return a list of users whose tastes are most similar to the tastes of user u
-  def most_similar(u)
-    similar_users = Hash.new
-    # similarity between user and all other users
-    @users.each do |key, value|
-      if key != u
-        similar_users[key] = similarity(u, key)
-      end
-    end
-    similar_users.sort_by {|key, value| value}.reverse.to_h.keys
-  end
-
   def predict(user, movie)
+    popularity = popularity(movie)
+    if popularity
+      return (@users[user][:average] + popularity) / 2
+    end
     4
   end
 
