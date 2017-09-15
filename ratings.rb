@@ -15,7 +15,7 @@ class Ratings
 
     open(filename).read.each_line do |line|
       user_arr = line.split
-      user_id, movie_id, movie_rating = user_arr[0].to_i, user_arr[1].to_i, user_arr[2].to_i
+      user_id, movie_id, movie_rating = split(user_arr)
       user = @users[user_id]
       if !user
           user = Hash.new
@@ -42,7 +42,7 @@ class Ratings
       @movies[key] = ratings.reduce(:+).to_f / ratings.size
     end
 
-    @movies = @movies.sort_by {|key, value| value}.reverse.to_h
+    @movies = @movies.sort_by {|_key, value| value}.reverse.to_h
     new(@users, @movies)
   end
 
@@ -53,7 +53,7 @@ class Ratings
 
     open(filename).read.each_line do |line|
       user_arr = line.split
-      user_id, movie_id, movie_rating = user_arr[0].to_i, user_arr[1].to_i, user_arr[2].to_i
+      user_id, movie_id, movie_rating = split(user_arr)
       user = @users[user_id]
       if !user
           user = Hash.new
@@ -81,6 +81,10 @@ class Ratings
       return (@users[user][:average] + popularity) / 2
     end
     4
+  end
+
+  def self.split(user_arr)
+    return user_arr[0].to_i, user_arr[1].to_i, user_arr[2].to_i
   end
 
 end
