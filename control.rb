@@ -11,6 +11,7 @@ class Control
     show_stats(diff, average, stdev)
   end
 
+  # displays statistics from validation
   def show_stats(diff, average, stdev)
     puts 'Average error is: ' + average.to_s
     puts 'Standard deviation of the error is: ' + stdev.to_s
@@ -21,6 +22,7 @@ class Control
 
 end
 
+# runs for each pair (1-5) of base and test files
 controller = Control.new
 (1..5).each do |x|
   puts "\nFiles version " + x.to_s + ':'

@@ -1,51 +1,18 @@
-Movies Part 1
+Movies Part 2
 
 
-Description of solution:
+Algorithm:
 
-The MovieData class reads in the entered file (u.data). It generates a hash, where
-the key is the user id, and the value is another hash. This hash has a key of the
-movie id, and a value of the rating the user gave this movie. This enables user ids
-to be searched quickly, with all information of their movie preferences available.
-The constructor also generates another hash, where the key is the movie id, and the
-value is that movie's average rating. It does this by keeping track of all of its
-ratings in an array, and then calculating the average. Finally, this hash is sorted
-by most to least popular movie.
+The algorithm to predict what a user would rate a movie takes the average of two values from the base data: The average rating the user rated all movies, and the average that movie was rated by all movies. An advantage of this algorithm is its speed. The values required have already been calculated in the instantiation of the Ratings class, so each call to the predict method runs in constant time. Of course, this means that the instantiation of the class takes longer (although this is done once, where the predict method may be called thousands of times). A disadvantage is that it does not use any information about the user other than the user's average rating of movies - it does not look into any of the other available information about users. However, this results in a faster prediction algorithm, and experimentation with additional user information did not yield significantly improved results.
 
-The popularity method simply looks up a movie id in the movie hash, and returns its
-value (which is its average popularity).
+Analysis:
 
-The popularity_list method simply returns the keys of the movie hash, as it has
-already been sorted (so the return value will be the movies in order of popularity).
+My prediction method's results were compared to the results of returning the value '3' for the predict method across all base and test files. (3 was selected, as it was found to be the constant with the most accurate results). As can be seen in the running_transcript text, my prediction method was significantly more accurate, with an average error of approximately 0.623 less than that of the constant return value, and a standard deviation approximately 0.176 less. My algorithm also had far more correct guesses, and fewer predictions off by 1 or 2. It also did not have any guesses that were off by the maximum of 4. (It did have some more guesses that were off by 3 than the constant return value, but this is because the return value of 3 could not be off by 3 from another value.)
 
-The similarity method keeps track of how many movies two users have both rated, and
-how similarly they have rated these movies. The more similarly the users rated their
-movies, the larger the returned value. The fewer uncommon movies the users had,
-aka the number of users one rated that the other did not relative to the total number
-of movies they rated, the larger the returned value as well.
+Benchmarking:
 
-The most_similar method calls the similarity method for the user id entered against
-every other user in the users hash. Since the similarity method in commutative,
-the similarity method only needs to be called once per user pair.
+The overall runtime of this program, which includes analyzing and predicting five pairs of base and test files and displaying the statistical results, is between 1.0 and 1.1 seconds. Each run of the predict method is almost instantaneous, as the time it takes to run is at most approximately 2 * 10^-6 seconds. This time would not be affected were the application to scale. However, the time to instantiate the Ratings class would increase, although minimally. Each additional user's data will simply be read in and its average rating of movies will be calculated, and the movie ratings will contribute to that movie's average rating. The real concern would be memory usage, as this data is stored in memory rather than a database.
 
+Other:
 
-Description of an algorithm to predict the ranking that a user U would give to a movie M assuming the user hasn’t already ranked the movie in the dataset:
-
-This algorithm could examine the x most similar users to user U, and whichever of
-these users gave a ranking for movie M, predict that user U would give a similar
-rating. (For example, the algorithm could take the average rating of movie M from
-the top 10 most similar users to user U).
-
-
-Do the algorithms scale? What factors determine the execution time of the “most_similar” and “popularity_list” algorithms:
-
-The most_similar algorithm runs in O(n) time, where n is the number of users. For
-every user added, this algorithm will need to iterate an additional time, comparing
-that additional user's rating to the user in question. However, if this MovieData
-program were to 'go live,' it could store the most similar users to each user in
-another hash (or database), and whenever a user is added, it could simply run the
-similarity method against that user and the already existing users to update the
-most similar lists, in which case the algorithm would scale well.
-
-The popularity_list algorithm runs in constant time, as it simply takes the keys
-of an already sorted hash, so this algorithm would certainly scale well.
+The reek gem and Code Climate have found no issues with this code.

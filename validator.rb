@@ -16,6 +16,7 @@ class Validator
     return differences, average, Validator.stdev_diff(differences, average)
   end
 
+  # finds differences between predictions of movie ratings for a user and the actual rating given by the user
   def self.find_diff(user, movies, differences)
     movies.each do |movie|
       predicted = @ratings_base.predict(user, movie[0])
@@ -25,6 +26,7 @@ class Validator
     differences
   end
 
+  # find the average difference between the predictions and actual values for a file
   def self.average_diff(differences)
     avg, total = 0.0, 0.0
     differences.each_with_index do |value, amount|
@@ -34,6 +36,7 @@ class Validator
     avg/total
   end
 
+  # find the standard deviation of the error of the predictions for a file
   def self.stdev_diff(differences, average)
     arr = Array.new
     differences.each_with_index do |value, amount|
